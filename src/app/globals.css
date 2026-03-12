@@ -2059,3 +2059,97 @@ html.lenis body {
         padding-top: 36px;
     }
 }
+
+/* =========================================
+   MENÚ DESPLEGABLE MÓVIL (SOBRESCRIBE HEADER MÓVIL)
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. Forzamos que el menú exista, pero esté oculto visualmente y sin atrapar clics */
+    .nav-container .main-nav {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        background-color: #1A120A;
+        /* Color de fondo oscuro y elegante */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 998;
+
+        /* Efecto de aparición */
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transform: translateY(-20px);
+        transition: all 0.4s ease-in-out;
+    }
+
+    /* 2. Cuando hacemos clic en la hamburguesa y se activa .open */
+    .nav-container.open .main-nav {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* 3. Estilos de los links adentro del menú móvil */
+    .nav-container .main-nav ul {
+        flex-direction: column;
+        gap: 40px !important;
+        text-align: center;
+    }
+
+    .nav-container .main-nav ul li a {
+        font-size: 2.2rem !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+        font-weight: 500 !important;
+        color: #FFFFFF;
+    }
+
+    /* 4. Selector de idiomas: Oculto por defecto, centrado abajo si está abierto */
+    .nav-container:not(.open) .lang-selector {
+        display: none !important;
+    }
+
+    .nav-container.open .lang-selector {
+        display: flex !important;
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+    }
+
+    /* 5. Animación del Botón Hamburguesa a "X" */
+    .mobile-toggle {
+        z-index: 999;
+        /* Para que quede por encima de la pantalla negra */
+        position: relative;
+    }
+
+    .mobile-toggle span {
+        transition: all 0.3s ease;
+        transform-origin: left center;
+        /* Gira desde la izquierda */
+    }
+
+    /* Rayita de arriba gira hacia abajo */
+    .nav-container.open .mobile-toggle span:nth-child(1) {
+        transform: rotate(45deg) translate(-2px, -2px);
+    }
+
+    /* Rayita del medio desaparece */
+    .nav-container.open .mobile-toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    /* Rayita de abajo gira hacia arriba */
+    .nav-container.open .mobile-toggle span:nth-child(3) {
+        transform: rotate(-45deg) translate(-2px, 2px);
+    }
+}

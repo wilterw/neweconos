@@ -94,12 +94,13 @@ function EcosystemTextIntro() {
 
   return (
     <section ref={ref} style={{
-      height: "120vh", position: "relative", zIndex: 10,
+      minHeight: "100dvh",
+      position: "relative", zIndex: 10,
       backgroundImage: "url('/assets/img/fondo-digital.jpg')",
-      backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"
+      backgroundSize: "cover", backgroundPosition: "center",
     }}>
-      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 20px" }}>
-        <motion.div style={{ opacity, scale, textAlign: "center", maxWidth: "1000px" }}>
+      <div style={{ position: "sticky", top: 0, minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 20px" }}>
+        <motion.div style={{ opacity, scale, textAlign: "center", maxWidth: "1000px", width: "100%" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 
             <motion.h1
@@ -109,10 +110,8 @@ function EcosystemTextIntro() {
                 fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 800, color: "#fff",
                 fontFamily: "var(--font-space)", lineHeight: 1.1, margin: "0",
                 letterSpacing: "-0.03em", textShadow: "0 10px 40px rgba(0,0,0,0.9)",
-                // CAMBIO AQUÍ: Usamos flex para separar las palabras de forma segura
                 display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.25em"
               }}>
-              {/* SOLUCIÓN: Separamos primero por palabras, y luego por letras */}
               {titleStr.split(" ").map((word, wordIndex) => (
                 <span key={wordIndex} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
                   {Array.from(word).map((char, charIndex) => (
@@ -127,7 +126,7 @@ function EcosystemTextIntro() {
           <motion.p
             initial="hidden" whileInView="visible" viewport={{ once: true }}
             variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.05, delayChildren: 1.5 } } }}
-            style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)", color: "rgba(255,255,255,0.8)", marginTop: "40px", lineHeight: 1.5, fontWeight: 400, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
+            style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)", color: "rgba(255,255,255,0.8)", marginTop: "clamp(20px, 4vw, 40px)", lineHeight: 1.5, fontWeight: 400, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
             {descWords.map((word, index) => (
               <motion.span key={index} variants={wordVariant} style={{ marginRight: "0.25em" }}>{word}</motion.span>
             ))}
@@ -146,7 +145,6 @@ function DigitizeSection() {
 
   const isEn = language === "en";
 
-  // Imagen fija para ambos idiomas
   const imageSrc = "/assets/img/digitaliza.jpg";
 
   const watermarkText = isEn ? "TRUST AND\nTRANSPARENCY" : "CONFIANZA\nY TRANSPARENCIA";
@@ -159,24 +157,22 @@ function DigitizeSection() {
       position: "relative",
       width: "100%",
       backgroundColor: "#F5F4F0",
-      padding: "150px 20px",
+      padding: "clamp(80px, 10vw, 150px) 20px",
       overflow: "hidden",
       zIndex: 10
     }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
 
-        {/* TEXTO DE MARCA DE AGUA */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 1, ease: "easeOut" }}
-          style={{ position: "absolute", top: -80, left: 0, zIndex: 0, pointerEvents: "none" }}
+          style={{ position: "absolute", top: "clamp(-40px, -8vw, -80px)", left: 0, zIndex: 0, pointerEvents: "none" }}
         >
           <h2 style={{
-            fontSize: "clamp(4rem, 9vw, 9rem)",
+            fontSize: "clamp(3.5rem, 9vw, 9rem)",
             fontWeight: 800,
-            // CAMBIO: Color #DEDEDE (punto medio ideal) y fuente Space Grotesk explícita
             color: "#DEDEDE",
             lineHeight: 0.85,
             whiteSpace: "pre-line",
@@ -189,14 +185,13 @@ function DigitizeSection() {
           </h2>
         </motion.div>
 
-        {/* TEXTOS DE CONFIANZA */}
-        <div style={{ position: "relative", zIndex: 1, marginBottom: "80px", paddingTop: "60px", paddingLeft: "20px" }}>
+        <div style={{ position: "relative", zIndex: 1, marginBottom: "clamp(40px, 8vw, 80px)", paddingTop: "clamp(40px, 8vw, 60px)", paddingLeft: "clamp(0px, 4vw, 20px)" }}>
           <motion.p
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ fontSize: "1.25rem", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", marginBottom: "20px" }}
+            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", marginBottom: "20px" }}
           >
             {p1}
           </motion.p>
@@ -205,20 +200,19 @@ function DigitizeSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            style={{ fontSize: "1.25rem", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", margin: 0 }}
+            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", margin: 0 }}
           >
             {p2}
           </motion.p>
         </div>
 
-        {/* CONTENEDOR DOS COLUMNAS */}
-        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "60px", position: "relative", zIndex: 1 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(30px, 6vw, 60px)", position: "relative", zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ flex: "1.2 1 400px" }}
+            style={{ flex: "1 1 min(100%, 400px)" }}
           >
             <img
               src={imageSrc}
@@ -232,17 +226,16 @@ function DigitizeSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            style={{ flex: "1 1 350px" }}
+            style={{ flex: "1 1 min(100%, 350px)" }}
           >
             <h2 style={{
-              fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)",
+              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
               fontWeight: 700,
               color: "#2D2418",
               lineHeight: 1.05,
               margin: 0,
               whiteSpace: "pre-line",
               letterSpacing: "-0.02em",
-              // También aseguramos Space Grotesk en el título principal
               fontFamily: "'Space Grotesk', var(--font-space, sans-serif)"
             }}>
               {mainTitle}
@@ -271,11 +264,97 @@ function HomeContent() {
 
   return (
     <>
+      {/* 🟢 LA SOLUCIÓN EXACTA PARA TU IMAGEN DE FONDO EN MÓVILES 🟢 */}
+      <style>{`
+        @media (max-width: 768px) {
+          /* 1. Mantenemos el fondo del hero con un color por si la imagen es corta */
+          .home-hero {
+            background: linear-gradient(180deg, #1A120A 0%, #D45025 100%) !important;
+          }
+
+          /* 2. LA FOTO NO SE CORTA MÁS: Se ajusta al 100% del ancho del celular */
+          .hero-bg-layer {
+            background-size: 100% auto !important; /* Muestra todo el ancho de la imagen */
+            background-position: top center !important; /* La pega en la parte de arriba */
+            background-repeat: no-repeat !important; /* Evita que la foto se clone hacia abajo */
+            inset: 0 !important; /* Desactiva el zoom de Framer Motion */
+            transform: none !important; /* Desactiva el parallax que la deforma */
+          }
+
+          /* 3. Empujamos el texto debajo del dibujo de "econos" */
+          .hero-bottom-layout {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important; /* Alinea el contenido abajo */
+            padding-top: 80vw !important; /* Da un margen gigante arriba para que la foto se vea limpia */
+            padding-bottom: 40px !important;
+          }
+          
+          /* 4. El texto secundario se hace pequeño para no chocar */
+          .hero-h1-split {
+            font-size: clamp(2rem, 8vw, 3rem) !important;
+            line-height: 1.1 !important;
+            white-space: normal !important;
+            word-wrap: break-word !important;
+          }
+          .hero-col-left, .hero-col-right {
+            width: 100% !important;
+            padding: 0 15px !important;
+            text-align: left !important;
+          }
+          .hero-desc {
+            font-size: 1.1rem !important;
+          }
+
+          /* Resto de ajustes del home (Gap y grillas) */
+          .gap-layout {
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 20px !important;
+            gap: 30px !important;
+          }
+          .gap-col-image, .gap-col-content {
+            width: 100% !important;
+          }
+          .ramon-img {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 4/3 !important;
+            object-fit: cover !important;
+            object-position: center top !important;
+            border-radius: 16px !important;
+          }
+          .identity-grid, .results-layout {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 30px !important;
+          }
+          .identity-left, .identity-right, .results-left, .results-right {
+            width: 100% !important;
+          }
+        }
+      `}</style>
+
       {/* ─── 1. HERO ─── */}
-      <section ref={heroRef} className="home-hero" style={{ position: "relative", overflow: "hidden", background: "transparent" }}>
-        <motion.div style={{ y: heroBgY, position: "absolute", inset: "-10% 0", backgroundImage: `url('${t("home.hero.bg")}')`, backgroundSize: "cover", backgroundPosition: "center bottom", zIndex: 0, filter: "brightness(1.6) saturate(1.1)" }} />
+      <section ref={heroRef} className="home-hero" style={{ position: "relative", overflow: "hidden", minHeight: "100dvh", display: "flex", alignItems: "center" }}>
+
+        {/* Usamos la clase hero-bg-layer para aplicarle nuestra regla del 100% auto en móvil */}
+        <motion.div
+          className="hero-bg-layer"
+          style={{
+            y: heroBgY,
+            position: "absolute",
+            inset: "-10% 0",
+            backgroundImage: `url('${t("home.hero.bg")}')`,
+            backgroundSize: "cover", // Esto se mantiene para PC, pero se sobrescribe en móvil
+            backgroundPosition: "center center",
+            zIndex: 0,
+            filter: "brightness(1.6) saturate(1.1)"
+          }}
+        />
+
         <FloatingParticles />
-        <motion.div className="container hero-bottom-layout" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity }}>
+        <motion.div className="container hero-bottom-layout" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity, width: "100%", height: "100%" }}>
           <RevealParent className="hero-col-left">
             <div style={{ overflow: "hidden" }}>
               <SplitText className="hero-h1-split" delay={0.1} stagger={0.07} tag="h1">{t("home.hero.tagline")}</SplitText>
@@ -322,10 +401,10 @@ function HomeContent() {
         </RevealParent>
       </section>
 
-      {/* ─── 4. ECOSYSTEM TEXT (La introducción desaparece) ─── */}
+      {/* ─── 4. ECOSYSTEM TEXT ─── */}
       <EcosystemTextIntro />
 
-      {/* ─── 5. ECOSYSTEM CARDS (El túnel comienza limpio) ─── */}
+      {/* ─── 5. ECOSYSTEM CARDS ─── */}
       <EcosystemScroll />
 
       {/* ─── 6. RESULTS ─── */}
@@ -345,38 +424,42 @@ function HomeContent() {
         </RevealParent>
       </section>
 
-      {/* ─── 7. METHODOLOGY (NUEVO MÉTODO INTERACTIVO) ─── */}
+      {/* ─── 7. METHODOLOGY ─── */}
       <MethodologyScroll />
 
-      {/* ─── 8. NUEVA SECCIÓN: DIGITALIZA ─── */}
+      {/* ─── 8. DIGITALIZA ─── */}
       <DigitizeSection />
 
-      {/* ─── 9. CTA (LA SECCIÓN RECUPERADA) ─── */}
+      {/* ─── 9. CTA FINAL ─── */}
       <section ref={ctaRef} style={{
-        position: "relative", padding: "150px 20px", display: "flex",
+        position: "relative",
+        padding: "clamp(80px, 10vw, 150px) 20px",
+        display: "flex",
         justifyContent: "center", overflow: "hidden",
-        // Aquí añadimos tu imagen de fondo
         backgroundImage: "url('/assets/img/fondo-contacto.jpg')",
         backgroundSize: "cover",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
+        minHeight: "clamp(400px, 50dvh, 600px)"
       }}>
         <motion.div
-          style={{ position: "relative", zIndex: 10, maxWidth: "1000px", width: "100%", textAlign: "left" }}
+          style={{ position: "relative", zIndex: 10, maxWidth: "1000px", width: "100%", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center" }}
           initial={{ opacity: 0, y: 50 }}
           animate={ctaView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 style={{ fontSize: "clamp(2rem, 4vw, 4rem)", color: "#fff", fontWeight: 400, lineHeight: 1.1, margin: "0 0 40px 0" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "#fff", fontWeight: 400, lineHeight: 1.1, margin: "0 0 40px 0" }}>
             ¿Listo para digitalizar tu inmobiliaria?<br />
             <strong style={{ fontWeight: 800 }}>Hablemos hoy.</strong>
           </h2>
-          <Link href="/contacto" style={{
-            display: "inline-block", background: "#fff", color: "#000",
-            padding: "18px 40px", borderRadius: "8px", fontSize: "1rem",
-            fontWeight: 600, textDecoration: "none", transition: "transform 0.3s ease"
-          }}>
-            Hablar con un Experto →
-          </Link>
+          <div>
+            <Link href="/contacto" style={{
+              display: "inline-block", background: "#fff", color: "#000",
+              padding: "18px 40px", borderRadius: "8px", fontSize: "1rem",
+              fontWeight: 600, textDecoration: "none", transition: "transform 0.3s ease"
+            }}>
+              Hablar con un Experto →
+            </Link>
+          </div>
         </motion.div>
       </section>
     </>
