@@ -5,7 +5,6 @@ import "./globals.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import SmoothScroll from "../components/smoothscroll";
-import GlobalBackground from "../components/globalbackground";
 import { LanguageProvider } from "../context/languagecontext";
 import PageTransition from "../components/pagetransition";
 import CustomCursor from "../components/customcursor";
@@ -40,13 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable} ${interTight.variable}`}>
-      <body>
+    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable} ${interTight.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <LanguageProvider>
           {/* Cursor tecnológico (solo desktop) */}
           <CustomCursor />
-
-          <GlobalBackground />
 
           <SmoothScroll>
             <Header />

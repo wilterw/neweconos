@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useLanguage } from "../context/languagecontext";
 
@@ -12,12 +12,42 @@ export default function Header() {
   // Función para cerrar el menú al hacer clic en un enlace
   const closeMenu = () => setIsMobileOpen(false);
 
+  // Estado para detectar si se ha scrolleado más allá de un umbral
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Si scrolleamos más de 100px, ocultamos el logo
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Escuchar el evento de scroll
+    window.addEventListener("scroll", handleScroll);
+
+    // Limpiar el event listener al desmontar el componente
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <header id="global-header">
       <div className="header-container">
 
         {/* LOGO */}
-        <div className="logo-container">
+        <div 
+          className="logo-container"
+          style={{
+            opacity: isScrolled ? 0 : 1,
+            visibility: isScrolled ? "hidden" : "visible",
+            pointerEvents: isScrolled ? "none" : "auto",
+            transition: "opacity 0.4s ease, visibility 0.4s ease",
+          }}
+        >
           <Link href="/" onClick={closeMenu}>
             <img src="/assets/img/logo-econos-blanco.png" alt="ECONOS Logo" className="logo-img" />
           </Link>

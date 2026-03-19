@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "framer-motion";
 import { RevealParent, RevealChild } from "../components/fadein";
 import { useLanguage } from "../context/languagecontext";
 
@@ -11,6 +11,7 @@ import EcosystemScroll from "../components/ecosystemscroll";
 import TiltCard from "../components/tiltcard";
 import SplitText from "../components/splittext";
 import MethodologyScroll from "../components/methodologyscroll";
+import FadeInSection from "../components/fadeinsection";
 
 // ─────────────────────────────────────────────
 // Scroll Progress Bar
@@ -64,7 +65,7 @@ function GradientRevealText({ children, className = "" }: { children: React.Reac
 }
 
 // ─────────────────────────────────────────────
-// NUEVA SECCIÓN INDEPENDIENTE: TEXTO DEL ECOSISTEMA
+// SECCIÓN INDEPENDIENTE: TEXTO DEL ECOSISTEMA
 // ─────────────────────────────────────────────
 function EcosystemTextIntro() {
   const { t } = useLanguage();
@@ -96,9 +97,8 @@ function EcosystemTextIntro() {
     <section ref={ref} style={{
       minHeight: "100dvh",
       position: "relative", zIndex: 10,
-      backgroundImage: "url('/assets/img/fondo-digital.jpg')",
-      backgroundSize: "cover", backgroundPosition: "center",
     }}>
+
       <div style={{ position: "sticky", top: 0, minHeight: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 20px" }}>
         <motion.div style={{ opacity, scale, textAlign: "center", maxWidth: "1000px", width: "100%" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -138,13 +138,11 @@ function EcosystemTextIntro() {
 }
 
 // ─────────────────────────────────────────────
-// NUEVA SECCIÓN: CONFIANZA Y DIGITALIZA
+// SECCIÓN: CONFIANZA Y DIGITALIZA
 // ─────────────────────────────────────────────
 function DigitizeSection() {
   const { language } = useLanguage();
-
   const isEn = language === "en";
-
   const imageSrc = "/assets/img/digitaliza.jpg";
 
   const watermarkText = isEn ? "TRUST AND\nTRANSPARENCY" : "CONFIANZA\nY TRANSPARENCIA";
@@ -154,90 +152,31 @@ function DigitizeSection() {
 
   return (
     <section style={{
-      position: "relative",
-      width: "100%",
-      backgroundColor: "#F5F4F0",
-      padding: "clamp(80px, 10vw, 150px) 20px",
-      overflow: "hidden",
-      zIndex: 10
+      position: "relative", width: "100%", backgroundColor: "transparent",
+      padding: "clamp(80px, 10vw, 150px) 20px", overflow: "hidden", zIndex: 10
     }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative" }}>
 
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-10%" }} transition={{ duration: 1, ease: "easeOut" }}
           style={{ position: "absolute", top: "clamp(-40px, -8vw, -80px)", left: 0, zIndex: 0, pointerEvents: "none" }}
         >
-          <h2 style={{
-            fontSize: "clamp(3.5rem, 9vw, 9rem)",
-            fontWeight: 800,
-            color: "#DEDEDE",
-            lineHeight: 0.85,
-            whiteSpace: "pre-line",
-            margin: 0,
-            textTransform: "uppercase",
-            fontFamily: "'Space Grotesk', var(--font-space, sans-serif)",
-            letterSpacing: "-0.02em"
-          }}>
+          <h2 style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)", fontWeight: 800, color: "#DEDEDE", lineHeight: 0.85, whiteSpace: "pre-line", margin: 0, textTransform: "uppercase", fontFamily: "'Space Grotesk', var(--font-space, sans-serif)", letterSpacing: "-0.02em" }}>
             {watermarkText}
           </h2>
         </motion.div>
 
         <div style={{ position: "relative", zIndex: 1, marginBottom: "clamp(40px, 8vw, 80px)", paddingTop: "clamp(40px, 8vw, 60px)", paddingLeft: "clamp(0px, 4vw, 20px)" }}>
-          <motion.p
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", marginBottom: "20px" }}
-          >
-            {p1}
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", margin: 0 }}
-          >
-            {p2}
-          </motion.p>
+          <motion.p initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", marginBottom: "20px" }}>{p1}</motion.p>
+          <motion.p initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }} style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.25rem)", color: "#2D2418", lineHeight: 1.6, fontWeight: 500, whiteSpace: "pre-line", margin: 0 }}>{p2}</motion.p>
         </div>
 
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(30px, 6vw, 60px)", position: "relative", zIndex: 1 }}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ flex: "1 1 min(100%, 400px)" }}
-          >
-            <img
-              src={imageSrc}
-              alt="Digitaliza"
-              style={{ width: "100%", height: "auto", borderRadius: "12px", boxShadow: "0 20px 40px rgba(0,0,0,0.1)", objectFit: "cover" }}
-            />
+          <motion.div initial={{ opacity: 0, scale: 0.95, y: 40 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true, margin: "-10%" }} transition={{ duration: 0.8, ease: "easeOut" }} style={{ flex: "1 1 min(100%, 400px)" }}>
+            <img src={imageSrc} alt="Digitaliza" style={{ width: "100%", height: "auto", borderRadius: "12px", boxShadow: "0 20px 40px rgba(0,0,0,0.1)", objectFit: "cover" }} />
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            style={{ flex: "1 1 min(100%, 350px)" }}
-          >
-            <h2 style={{
-              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-              fontWeight: 700,
-              color: "#2D2418",
-              lineHeight: 1.05,
-              margin: 0,
-              whiteSpace: "pre-line",
-              letterSpacing: "-0.02em",
-              fontFamily: "'Space Grotesk', var(--font-space, sans-serif)"
-            }}>
+          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-10%" }} transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }} style={{ flex: "1 1 min(100%, 350px)" }}>
+            <h2 style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", fontWeight: 700, color: "#2D2418", lineHeight: 1.05, margin: 0, whiteSpace: "pre-line", letterSpacing: "-0.02em", fontFamily: "'Space Grotesk', var(--font-space, sans-serif)" }}>
               {mainTitle}
             </h2>
           </motion.div>
@@ -248,10 +187,167 @@ function DigitizeSection() {
 }
 
 // ─────────────────────────────────────────────
+// RESULTS SECTION — Carrusel Activo con Estado y AnimatePresence
+// ─────────────────────────────────────────────
+function ResultsSection() {
+  const { t } = useLanguage();
+  const mainRef = useRef<HTMLElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: mainRef,
+    offset: ["start start", "end end"],
+  });
+
+  useEffect(() => {
+    return scrollYProgress.on("change", (latest) => {
+      let index = Math.floor(latest * 5);
+      if (index >= 5) index = 4;
+      if (index < 0) index = 0;
+      setActiveIndex(index);
+    });
+  }, [scrollYProgress]);
+
+  const listKeys = ["home.results.list1", "home.results.list2", "home.results.list3", "home.results.list4", "home.results.list5"];
+  const nums = ["01", "02", "03", "04", "05"];
+
+  const rawTitle = t("home.results.title");
+  const titleStr = (typeof rawTitle === "string" && rawTitle !== "home.results.title")
+    ? rawTitle
+    : "Resultados reales que notarás desde el primer mes";
+
+  return (
+    <>
+      <style>{`
+          .results-card-inner {
+              display: flex;
+              align-items: center;
+              width: 100%;
+              max-width: 650px;
+              background: rgba(20, 20, 25, 0.85);
+              backdrop-filter: blur(20px);
+              border: 1px solid rgba(255,255,255,0.05);
+              border-radius: 32px;
+              padding: 40px 40px;
+              box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+              gap: 30px;
+          }
+          .results-card-num {
+              font-size: 5rem;
+              font-weight: 800;
+              line-height: 0.8;
+              color: #CC0000;
+              font-family: var(--font-space);
+              flex-shrink: 0;
+          }
+          .results-card-content {
+              display: flex;
+              flex-direction: column;
+          }
+          .results-card-text {
+              font-size: clamp(1.4rem, 2vw, 1.8rem);
+              font-weight: 600;
+              color: #fff;
+              margin: 0;
+              line-height: 1.3;
+          }
+
+          @media (max-width: 900px) {
+              .results-column-wrapper {
+                  flex-direction: column !important;
+              }
+              .results-title-col {
+                  padding-bottom: 20px !important;
+                  display: flex;
+                  align-items: flex-end;
+              }
+              .results-cards-col {
+                  align-items: flex-start !important;
+              }
+          }
+
+          @media (max-width: 768px) {
+              .results-card-inner {
+                  flex-direction: column;
+                  padding: 30px 25px;
+                  gap: 20px;
+                  border-radius: 24px;
+                  align-items: flex-start;
+              }
+              .results-card-num { font-size: 4rem; }
+              .results-card-text { font-size: 1.3rem; }
+          }
+      `}</style>
+
+      <section ref={mainRef} style={{
+        position: "relative", width: "100%",
+        height: "500vh",
+        backgroundColor: "transparent",
+        zIndex: 30
+      }}>
+        <div style={{
+          position: "sticky", top: 0, height: "100dvh", width: "100%", overflow: "hidden",
+          display: "flex", alignItems: "center"
+        }}>
+          <div className="container results-column-wrapper" style={{ display: "flex", width: "100%", height: "100%" }}>
+
+            {/* LEFT: Título Fijo */}
+            <div className="results-title-col" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", paddingRight: "5vw" }}>
+              <motion.h2
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 800, color: "#0A0A0C", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.05 }}
+                dangerouslySetInnerHTML={{ __html: titleStr }}
+              />
+
+              <motion.div
+                animate={{ opacity: activeIndex === 4 ? 1 : 0, y: activeIndex === 4 ? 0 : 20 }}
+                transition={{ duration: 0.5 }}
+                style={{ marginTop: "30px", pointerEvents: activeIndex === 4 ? "auto" : "none" }}
+              >
+                <p className="results-footer-text" dangerouslySetInnerHTML={{ __html: t("home.results.footer") }} style={{ margin: 0, color: "#2D2418", fontSize: "0.95rem" }} />
+              </motion.div>
+            </div>
+
+            {/* RIGHT: Carrusel de Tarjetas Activas mediante ESTADO */}
+            <div className="results-cards-col" style={{ flex: 1, position: "relative", height: "100%", display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 60 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -60 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  style={{ position: "absolute", width: "100%", display: "flex" }}
+                >
+                  <div className="results-card-inner">
+                    <span className="results-card-num">{nums[activeIndex]}</span>
+                    <div className="results-card-content">
+                      <p className="results-card-text">{t(listKeys[activeIndex])}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 3, pointerEvents: "none" }} />
+      </section>
+    </>
+  );
+}
+
+// ─────────────────────────────────────────────
 // Main page content
 // ─────────────────────────────────────────────
 function HomeContent() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -262,99 +358,55 @@ function HomeContent() {
   const ctaRef = useRef(null);
   const ctaView = useInView(ctaRef, { once: true, margin: "-15%" });
 
+  // 🟢 Lógica de Imagen para Ramon (Español vs Inglés)
+  const ramonImgSrc = language === "en" ? "/assets/img/ramon-en.jpg" : "/assets/img/ramon.jpg";
+
+  // FÓRMULA RESUMEN PARA LA SECCIÓN GAP
+  const gapSummaryText = language === "en"
+    ? "<strong>Expert technology</strong> + <strong>Custom design</strong> + <strong>Tech partner</strong> = <br/><span class='gap-final-bold' style='display: block; margin-top: 15px; font-size: 1.2em; font-weight: 800; letter-spacing: -0.02em;'>Tangible results for your business.</span>"
+    : "<strong>Tecnología experta</strong> + <strong>Diseño personalizado</strong> + <strong>Partner tecnológico</strong> = <br/><span class='gap-final-bold' style='display: block; margin-top: 15px; font-size: 1.2em; font-weight: 800; letter-spacing: -0.02em;'>Resultados tangibles en tu negocio.</span>";
+
   return (
     <>
-      {/* 🟢 LA SOLUCIÓN EXACTA PARA TU IMAGEN DE FONDO EN MÓVILES 🟢 */}
       <style>{`
         @media (max-width: 768px) {
-          /* 1. Mantenemos el fondo del hero con un color por si la imagen es corta */
-          .home-hero {
-            background: linear-gradient(180deg, #1A120A 0%, #D45025 100%) !important;
-          }
-
-          /* 2. LA FOTO NO SE CORTA MÁS: Se ajusta al 100% del ancho del celular */
+          .home-hero { background: linear-gradient(180deg, #1A120A 0%, #D45025 100%) !important; }
           .hero-bg-layer {
-            background-size: 100% auto !important; /* Muestra todo el ancho de la imagen */
-            background-position: top center !important; /* La pega en la parte de arriba */
-            background-repeat: no-repeat !important; /* Evita que la foto se clone hacia abajo */
-            inset: 0 !important; /* Desactiva el zoom de Framer Motion */
-            transform: none !important; /* Desactiva el parallax que la deforma */
+            background-size: 100% auto !important; 
+            background-position: top center !important; 
+            background-repeat: no-repeat !important; 
+            inset: 0 !important; 
+            transform: none !important; 
           }
-
-          /* 3. Empujamos el texto debajo del dibujo de "econos" */
           .hero-bottom-layout {
             display: flex !important;
             flex-direction: column !important;
-            justify-content: flex-end !important; /* Alinea el contenido abajo */
-            padding-top: 80vw !important; /* Da un margen gigante arriba para que la foto se vea limpia */
+            justify-content: flex-end !important; 
+            padding-top: 80vw !important; 
             padding-bottom: 40px !important;
           }
-          
-          /* 4. El texto secundario se hace pequeño para no chocar */
-          .hero-h1-split {
-            font-size: clamp(2rem, 8vw, 3rem) !important;
-            line-height: 1.1 !important;
-            white-space: normal !important;
-            word-wrap: break-word !important;
-          }
-          .hero-col-left, .hero-col-right {
-            width: 100% !important;
-            padding: 0 15px !important;
-            text-align: left !important;
-          }
-          .hero-desc {
-            font-size: 1.1rem !important;
-          }
-
-          /* Resto de ajustes del home (Gap y grillas) */
-          .gap-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            padding: 20px !important;
-            gap: 30px !important;
-          }
-          .gap-col-image, .gap-col-content {
-            width: 100% !important;
-          }
-          .ramon-img {
-            width: 100% !important;
-            height: auto !important;
-            aspect-ratio: 4/3 !important;
-            object-fit: cover !important;
-            object-position: center top !important;
-            border-radius: 16px !important;
-          }
-          .identity-grid, .results-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 30px !important;
-          }
-          .identity-left, .identity-right, .results-left, .results-right {
-            width: 100% !important;
-          }
+          .hero-h1-split { font-size: clamp(2rem, 8vw, 3rem) !important; line-height: 1.1 !important; white-space: normal !important; word-wrap: break-word !important; }
+          .hero-col-left, .hero-col-right { width: 100% !important; padding: 0 15px !important; text-align: left !important; }
+          .hero-desc { font-size: 1.1rem !important; }
+          .gap-layout { display: flex !important; flex-direction: column !important; padding: 20px !important; gap: 30px !important; }
+          .gap-col-image, .gap-col-content { width: 100% !important; }
+          .ramon-img { width: 100% !important; height: auto !important; aspect-ratio: 4/3 !important; object-fit: cover !important; object-position: center top !important; border-radius: 16px !important; }
+          .identity-grid, .results-layout { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          .identity-left, .identity-right, .results-left, .results-right { width: 100% !important; }
         }
       `}</style>
 
       {/* ─── 1. HERO ─── */}
       <section ref={heroRef} className="home-hero" style={{ position: "relative", overflow: "hidden", minHeight: "100dvh", display: "flex", alignItems: "center" }}>
-
-        {/* Usamos la clase hero-bg-layer para aplicarle nuestra regla del 100% auto en móvil */}
         <motion.div
           className="hero-bg-layer"
           style={{
-            y: heroBgY,
-            position: "absolute",
-            inset: "-10% 0",
-            backgroundImage: `url('${t("home.hero.bg")}')`,
-            backgroundSize: "cover", // Esto se mantiene para PC, pero se sobrescribe en móvil
-            backgroundPosition: "center center",
-            zIndex: 0,
-            filter: "brightness(1.6) saturate(1.1)"
+            y: heroBgY, position: "absolute", inset: "-10% 0", backgroundImage: `url('${t("home.hero.bg")}')`,
+            backgroundSize: "cover", backgroundPosition: "center center", zIndex: 0, filter: "brightness(1.6) saturate(1.1)"
           }}
         />
-
         <FloatingParticles />
-        <motion.div className="container hero-bottom-layout" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity, width: "100%", height: "100%" }}>
+        <motion.div className="container hero-bottom-layout" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity, width: "100%", height: "100%", paddingBottom: "120px" }}>
           <RevealParent className="hero-col-left">
             <div style={{ overflow: "hidden" }}>
               <SplitText className="hero-h1-split" delay={0.1} stagger={0.07} tag="h1">{t("home.hero.tagline")}</SplitText>
@@ -367,101 +419,124 @@ function HomeContent() {
             </div>
           </RevealParent>
         </motion.div>
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 3, pointerEvents: "none" }} />
       </section>
 
       {/* ─── 2. IDENTITY ─── */}
-      <section className="home-section section-identity" style={{ position: "relative" }}>
-        <div className="container">
-          <RevealParent className="identity-grid" staggerDelay={0.2}>
-            <div className="identity-left">
-              <TextMask delay={0.2}><h2 className="big-title" dangerouslySetInnerHTML={{ __html: t("home.identity.title") }} style={{ margin: 0 }} /></TextMask>
-            </div>
-            <GradientRevealText className="identity-right"><p dangerouslySetInnerHTML={{ __html: t("home.identity.desc") }} /></GradientRevealText>
-          </RevealParent>
-          <GradientRevealText><p className="identity-hero-moved" dangerouslySetInnerHTML={{ __html: t("home.hero.title") }} /></GradientRevealText>
-        </div>
-      </section>
+      <FadeInSection>
+        <section className="home-section section-identity" style={{ position: "relative", backgroundColor: "transparent" }}>
+          <div className="container">
+            <RevealParent className="identity-grid" staggerDelay={0.2}>
 
-      {/* ─── 3. GAP (IMAGEN CON FLIP 3D) ─── */}
-      <section className="home-section section-gap">
-        <RevealParent className="container gap-layout">
-          <RevealChild className="gap-col-image">
-            <div className="gap-image-container" style={{ perspective: 1000 }}>
-              <motion.img src="/assets/img/ramon.jpg" alt="Experto IA" className="ramon-img" initial={{ rotateY: 90, opacity: 0, scale: 0.8 }} whileInView={{ rotateY: 0, opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 1.2, ease: "easeOut" }} style={{ transformStyle: "preserve-3d" }} />
-            </div>
-          </RevealChild>
-          <div className="gap-col-content">
-            <TextMask><h2 className="gap-title" dangerouslySetInnerHTML={{ __html: t("home.gap.title") }} style={{ margin: 0, paddingBottom: "20px" }} /></TextMask>
-            <RevealParent className="gap-text-block" staggerDelay={0.15}>
-              <RevealChild><p dangerouslySetInnerHTML={{ __html: t("home.gap.p1") }} /></RevealChild>
-              <RevealChild><p dangerouslySetInnerHTML={{ __html: t("home.gap.p2") }} /></RevealChild>
-              <RevealChild><p><span dangerouslySetInnerHTML={{ __html: t("home.gap.p3") }} /><br /><span className="gap-final-bold" dangerouslySetInnerHTML={{ __html: t("home.gap.p4") }} /></p></RevealChild>
+              <div className="identity-left">
+                <TextMask delay={0.2}><h2 className="big-title" dangerouslySetInnerHTML={{ __html: t("home.identity.title") }} style={{ margin: 0 }} /></TextMask>
+              </div>
+
+              <motion.div
+                className="identity-right"
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-15%" }}
+                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              >
+                <p dangerouslySetInnerHTML={{ __html: t("home.identity.desc") }} />
+              </motion.div>
+
             </RevealParent>
+
+            <GradientRevealText><p className="identity-hero-moved" dangerouslySetInnerHTML={{ __html: t("home.hero.title") }} /></GradientRevealText>
           </div>
-        </RevealParent>
-      </section>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "100px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 3, pointerEvents: "none" }} />
+        </section>
+      </FadeInSection>
 
-      {/* ─── 4. ECOSYSTEM TEXT ─── */}
-      <EcosystemTextIntro />
+      {/* ─── 3. GAP (IMAGEN CON FLIP 3D + FÓRMULA RESUMEN + IMAGEN DINÁMICA) ─── */}
+      <FadeInSection>
+        <section className="home-section section-gap" style={{ backgroundColor: "transparent" }}>
+          <RevealParent className="container gap-layout">
+            <RevealChild className="gap-col-image">
+              <div className="gap-image-container" style={{ perspective: 1000 }}>
+                {/* 🟢 Imagen dinámica con key para forzar re-render y estilos sólidos para PC */}
+                <motion.img
+                  key={language}
+                  src={ramonImgSrc}
+                  alt="Experto IA"
+                  className="ramon-img"
+                  initial={{ rotateY: 90, opacity: 0, scale: 0.8 }}
+                  whileInView={{ rotateY: 0, opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  style={{
+                    transformStyle: "preserve-3d",
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "16px",
+                    objectFit: "cover",
+                    display: "block"
+                  }}
+                />
+              </div>
+            </RevealChild>
+            <div className="gap-col-content">
+              <TextMask><h2 className="gap-title" dangerouslySetInnerHTML={{ __html: t("home.gap.title") }} style={{ margin: 0, paddingBottom: "20px" }} /></TextMask>
 
-      {/* ─── 5. ECOSYSTEM CARDS ─── */}
-      <EcosystemScroll />
+              <RevealParent className="gap-text-block" staggerDelay={0.15}>
+                <RevealChild>
+                  <p
+                    style={{ fontSize: "clamp(1.2rem, 2vw, 1.4rem)", lineHeight: 1.6, color: "#2D2418" }}
+                    dangerouslySetInnerHTML={{ __html: gapSummaryText }}
+                  />
+                </RevealChild>
+              </RevealParent>
+
+            </div>
+          </RevealParent>
+        </section>
+      </FadeInSection>
+
+      {/* ─── 4 & 5. ECOSYSTEM BUNDLE ─── */}
+      <FadeInSection>
+        <div style={{ position: "relative", backgroundImage: "url('/assets/img/fondo-digital.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, #FDFBF7, transparent)", zIndex: 1, pointerEvents: "none" }} />
+          <EcosystemTextIntro />
+          <EcosystemScroll hideTopFade={true} hideBottomFade={true} transparentBackground={true} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 1, pointerEvents: "none" }} />
+        </div>
+      </FadeInSection>
 
       {/* ─── 6. RESULTS ─── */}
-      <section className="home-section section-results">
-        <RevealParent className="container results-layout">
-          <div className="results-left"><TextMask delay={0.1}><h2 className="results-main-title" dangerouslySetInnerHTML={{ __html: t("home.results.title") }} style={{ margin: 0 }} /></TextMask></div>
-          <div className="results-right">
-            <RevealParent className="results-list" staggerDelay={0.12}>
-              <RevealChild><li>{t("home.results.list1")}</li></RevealChild>
-              <RevealChild><li>{t("home.results.list2")}</li></RevealChild>
-              <RevealChild><li>{t("home.results.list3")}</li></RevealChild>
-              <RevealChild><li>{t("home.results.list4")}</li></RevealChild>
-              <RevealChild><li>{t("home.results.list5")}</li></RevealChild>
-            </RevealParent>
-            <RevealChild><p className="results-footer-text" dangerouslySetInnerHTML={{ __html: t("home.results.footer") }} style={{ marginTop: "30px" }} /></RevealChild>
-          </div>
-        </RevealParent>
-      </section>
+      <ResultsSection />
 
       {/* ─── 7. METHODOLOGY ─── */}
-      <MethodologyScroll />
+      <FadeInSection>
+        <MethodologyScroll />
+      </FadeInSection>
 
       {/* ─── 8. DIGITALIZA ─── */}
-      <DigitizeSection />
+      <FadeInSection>
+        <DigitizeSection />
+      </FadeInSection>
 
       {/* ─── 9. CTA FINAL ─── */}
-      <section ref={ctaRef} style={{
-        position: "relative",
-        padding: "clamp(80px, 10vw, 150px) 20px",
-        display: "flex",
-        justifyContent: "center", overflow: "hidden",
-        backgroundImage: "url('/assets/img/fondo-contacto.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "clamp(400px, 50dvh, 600px)"
-      }}>
-        <motion.div
-          style={{ position: "relative", zIndex: 10, maxWidth: "1000px", width: "100%", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center" }}
-          initial={{ opacity: 0, y: 50 }}
-          animate={ctaView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+      <FadeInSection>
+        <section
+          className="home-section section-digital-cta"
+          style={{ backgroundImage: `url(${t("home.cta_digital.bg")})`, backgroundSize: "cover", backgroundPosition: "center", position: "relative" }}
         >
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", color: "#fff", fontWeight: 400, lineHeight: 1.1, margin: "0 0 40px 0" }}>
-            ¿Listo para digitalizar tu inmobiliaria?<br />
-            <strong style={{ fontWeight: 800 }}>Hablemos hoy.</strong>
-          </h2>
-          <div>
-            <Link href="/contacto" style={{
-              display: "inline-block", background: "#fff", color: "#000",
-              padding: "18px 40px", borderRadius: "8px", fontSize: "1rem",
-              fontWeight: 600, textDecoration: "none", transition: "transform 0.3s ease"
-            }}>
-              Hablar con un Experto →
-            </Link>
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, #FDFBF7, transparent)", zIndex: 1, pointerEvents: "none" }} />
+          <div className="container cta-container" style={{ position: "relative", zIndex: 2 }}>
+            <motion.div ref={ctaRef} className="cta-box" initial={{ y: 80, opacity: 0 }} animate={ctaView ? { y: 0, opacity: 1 } : {}} transition={{ type: "spring", stiffness: 70, damping: 18, mass: 1 }}>
+              <TextMask><h2 className="cta-heading" style={{ margin: 0 }}>{t("home.cta_digital.line1")}</h2></TextMask>
+              <motion.p className="cta-subheading" style={{ marginTop: "15px" }} initial={{ opacity: 0, y: 20 }} animate={ctaView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.25, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}>
+                {t("home.cta_digital.line2")}
+              </motion.p>
+              <motion.div className="cta-action" style={{ marginTop: "30px" }} initial={{ opacity: 0, y: 20 }} animate={ctaView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}>
+                <Magnetic strength={0.4}><Link href="/contacto" className="btn-white-expert" style={{ display: "inline-block" }}>{t("home.cta_digital.btn")}</Link></Magnetic>
+              </motion.div>
+            </motion.div>
           </div>
-        </motion.div>
-      </section>
+        </section>
+      </FadeInSection>
     </>
   );
 }

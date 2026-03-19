@@ -34,8 +34,8 @@ body {
     font-family: var(--font-main, 'Inter', sans-serif);
     color: var(--text-color, #333);
 
-    /* CAMBIO CLAVE: Fondo transparente para ver la imagen global */
-    background-color: transparent;
+    /* Fondo crema elegante */
+    background-color: #FDFBF7;
 
     overflow-x: clip;
 }
@@ -385,7 +385,51 @@ footer#global-footer {
     padding: 100px 0;
     position: relative;
     overflow: hidden;
+    /* Borders removed to avoid sharp lines */
 }
+
+/* =========================================
+   SCROLL FADE-IN ANIMATIONS
+   ========================================= */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, visibility 0.5s ease-out;
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+}
+
+/* =========================================
+   RESULTS SCROLL SECTION
+   ========================================= */
+.results-scroll-section {
+    position: relative;
+    height: 400vh; /* Espacio para hacer scroll a través de los ítems */
+    background: transparent;
+    z-index: 10;
+}
+
+.results-footer-text {
+    font-size: 1rem;
+    color: rgba(45, 36, 24, 0.55);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .results-scroll-section {
+        height: auto;
+    }
+
+}
+
+
 
 .section-title {
     font-size: 2.5rem;
@@ -933,7 +977,7 @@ footer#global-footer {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 140px 0;
+    padding: 220px 0 60px 0;
     /* Un poco más de aire vertical */
     color: #fff;
     display: flex;
@@ -1510,96 +1554,6 @@ html.lenis body {
     pointer-events: none;
 }
 
-/* =========================================
-   NUEVOS ESTILOS: TRANSPARENCIAS PARA FONDO GLOBAL
-   ========================================= */
-
-/* =========================================
-   NUEVOS ESTILOS: EFECTO CRISTAL (Frosted Glass)
-   ========================================= */
-
-/* 1. El Hero debe ser totalmente transparente */
-.home-hero {
-    background: transparent !important;
-}
-
-/* 2. Secciones "Blancas" -> Ahora Cristal Claro */
-.home-section,
-.section-identity,
-.section-methodology {
-    /* Color blanco con MUCHA transparencia (75% visible) */
-    background-color: rgba(255, 255, 255, 0.75) !important;
-    /* El truco: desenfoca lo que hay detrás de esta capa */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    /* Para Safari */
-
-    /* Bordes sutiles para definir el cristal */
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 1;
-}
-
-/* 3. Secciones "Gris Claro" -> Cristal un poco más opaco */
-.section-gap,
-.section-results {
-    background-color: rgba(240, 240, 245, 0.8) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* 4. Secciones oscuras -> Cristal Oscuro */
-.section-ecosystem,
-.section-digital-cta {
-    /* Negro al 80% de opacidad */
-    background-color: rgba(10, 10, 20, 0.8) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    /* Usamos multiply para oscurecer más el fondo */
-    background-blend-mode: multiply;
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Ajuste de sombra para la imagen de metodología sobre el cristal */
-.methodology-full-img {
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-/* Heros transparentes — muestran el fondo fijo global (hero-bg.jpg) */
-.home-hero,
-.banner-hero-section,
-.services-hero-container,
-.about-hero-container {
-    background: transparent !important;
-    min-height: 60vh;
-    position: relative;
-    overflow: hidden;
-}
-
-/* 2. Secciones "Blancas" -> Ahora Cristal Claro (AÑADIMOS SERVICIOS Y NOSOTROS) */
-.home-section,
-.section-identity,
-.section-methodology,
-.services-main-section,
-/* <-- Añadido */
-.corp-services-section,
-/* <-- Añadido */
-.about-img-section {
-    /* <-- Añadido */
-    background-color: rgba(255, 255, 255, 0.75) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 1;
-}
 
 /* =========================================
    ESTILOS DE LA PÁGINA DE CONTACTO (DISEÑO FINAL)

@@ -66,7 +66,7 @@ function SubEcosystemCard({ index, card, activeIndex, t }: { index: number, card
     );
 }
 
-export default function EcosystemScroll() {
+export default function EcosystemScroll({ hideTopFade = false, hideBottomFade = false, transparentBackground = false }: { hideTopFade?: boolean, hideBottomFade?: boolean, transparentBackground?: boolean } = {}) {
     const { t } = useLanguage();
     const mainRef = useRef<HTMLElement>(null);
 
@@ -97,10 +97,15 @@ export default function EcosystemScroll() {
             // Altura de 500vh: Da el espacio perfecto para que cada tarjeta respire
             // Y garantiza que la última tarjeta tenga una pantalla entera (100vh) para quedarse anclada
             height: "500vh",
-            backgroundImage: "url('/assets/img/fondo-digital.jpg')",
+            backgroundImage: transparentBackground ? "none" : "url('/assets/img/fondo-digital.jpg')",
             backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed",
             zIndex: 20
         }}>
+            {/* Soft edge fade at the top to blend from cream background */}
+            {!hideTopFade && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, #FDFBF7, transparent)", zIndex: 1, pointerEvents: "none" }} />}
+            {/* Soft edge fade at the bottom to blend to cream background */}
+            {!hideBottomFade && <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 1, pointerEvents: "none" }} />}
+
             <div style={{
                 position: "sticky", top: 0, height: "100vh", width: "100%", overflow: "hidden",
                 display: "flex", alignItems: "center", justifyContent: "center", padding: "0 20px"

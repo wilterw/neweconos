@@ -207,7 +207,7 @@ export default function MethodologyScroll() {
             <section ref={mainRef} style={{
                 position: "relative", width: "100%",
                 height: "500vh",
-                backgroundColor: "#F5F4F0",
+                backgroundColor: "transparent",
                 zIndex: 30
             }}>
                 {/* 100dvh permite que funcione perfecto quitando la barra en móviles */}

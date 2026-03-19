@@ -8,6 +8,7 @@ import Typewriter from "../../components/typewriter";
 import Magnetic from "../../components/magnetic";
 import TextMask from "../../components/textmask";
 import EcosystemScroll from "../../components/ecosystemscroll";
+import FadeInSection from "../../components/fadeinsection";
 
 // ─────────────────────────────────────────────
 // NUEVO COMPONENTE: SERVICIOS CORPORATIVOS (Scroll Vertical Editorial)
@@ -133,7 +134,7 @@ function CorpServicesScroll() {
     <section ref={mainRef} style={{
       position: "relative", width: "100%",
       height: "400vh", // 4 pantallas de duración para un scroll cómodo
-      backgroundColor: "#F5F4F0", // Fondo Crema
+      backgroundColor: "transparent", // Fondo transparente para fluir con el diseño
       zIndex: 30
     }}>
       <div style={{
@@ -150,6 +151,7 @@ function CorpServicesScroll() {
           >
             {titleLines.map((line, lineIndex) => (
               <div key={lineIndex}>
+                {/* 🟢 Solucionado el typo de charIndex a index */}
                 {Array.from(line.replace(/<[^>]*>?/gm, '')).map((char, index) => (
                   <motion.span key={index} variants={wordVariant}>{char === " " ? "\u00A0" : char}</motion.span>
                 ))}
@@ -196,91 +198,105 @@ function ServiciosContent() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             zIndex: 0,
-            filter: "brightness(1.5) saturate(1.1)"
+            filter: "brightness(1.6) saturate(1.1)" // 🟢 Efecto muy brillante
           }}
         />
-        <motion.div className="container" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity }}>
+        {/* 🟢 Texto alineado a la izquierda y subido con marginTop negativo */}
+        <motion.div className="container" style={{ position: "relative", zIndex: 2, y: heroY, opacity: heroOpacity, display: "flex", justifyContent: "flex-start", alignItems: "center", height: "100%", marginTop: "-25vh" }}>
           <Typewriter text={t("services.hero.eyebrow")} className="banner-hero-title" />
         </motion.div>
+        {/* Soft edge fade at the bottom to blend to cream background */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, transparent, #FDFBF7)", zIndex: 3, pointerEvents: "none" }} />
       </section>
 
       {/* ─── 2. INTRODUCCIÓN ─── */}
-      <section className="services-main-section section-pad-btm" style={{ position: "relative", overflow: "hidden" }}>
-        <div className="container">
-          <div className="services-intro-layout">
-            <div className="intro-col-left" style={{ overflow: "hidden", paddingBottom: "10px" }}>
-              <motion.h1
-                className="intro-title"
-                initial={{ y: 120, rotate: 6, opacity: 0 }}
-                whileInView={{ y: 0, rotate: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 1.1, ease: [0.25, 1, 0.35, 1] }}
-                dangerouslySetInnerHTML={{ __html: t("services.hero.title") }}
-                style={{ margin: 0, transformOrigin: "left bottom" }}
-              />
-            </div>
-            <div className="intro-col-right">
-              <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 1.1, delay: 0.15, ease: [0.25, 1, 0.35, 1] }}
-                className="intro-desc"
-                dangerouslySetInnerHTML={{ __html: t("services.hero.desc") }}
-                style={{ color: "#2D2418", fontWeight: 500 }}
-              />
+      <FadeInSection>
+        <section className="services-main-section section-pad-btm" style={{ position: "relative", overflow: "hidden" }}>
+          <div className="container">
+            <div className="services-intro-layout">
+              <div className="intro-col-left" style={{ overflow: "hidden", paddingBottom: "10px" }}>
+                <motion.h1
+                  className="intro-title"
+                  initial={{ y: 120, rotate: 6, opacity: 0 }}
+                  whileInView={{ y: 0, rotate: 0, opacity: 1 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 1.1, ease: [0.25, 1, 0.35, 1] }}
+                  dangerouslySetInnerHTML={{ __html: t("services.hero.title") }}
+                  style={{ margin: 0, transformOrigin: "left bottom" }}
+                />
+              </div>
+              <div className="intro-col-right">
+                <motion.div
+                  initial={{ y: 40, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 1.1, delay: 0.15, ease: [0.25, 1, 0.35, 1] }}
+                  className="intro-desc"
+                  dangerouslySetInnerHTML={{ __html: t("services.hero.desc") }}
+                  style={{ color: "#2D2418", fontWeight: 500 }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </FadeInSection>
 
       {/* ─── 3. ECOSISTEMA DIGITAL ─── */}
-      <EcosystemScroll />
+      <FadeInSection>
+        <EcosystemScroll />
+      </FadeInSection>
 
       {/* ─── 4. SERVICIOS CORPORATIVOS (Scroll Vertical Tipo Lista) ─── */}
-      <CorpServicesScroll />
+      <FadeInSection>
+        <CorpServicesScroll />
+      </FadeInSection>
 
       {/* ─── 5. CTA FINAL ─── */}
-      <section
-        className="home-section section-digital-cta"
-        style={{ backgroundImage: `url(${t("home.cta_digital.bg")})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      >
-        <div className="container cta-container">
-          <motion.div
-            ref={ctaRef}
-            className="cta-box"
-            initial={{ y: 80, opacity: 0 }}
-            animate={ctaView ? { y: 0, opacity: 1 } : {}}
-            transition={{ type: "spring", stiffness: 70, damping: 18, mass: 1 }}
-          >
-            <TextMask>
-              <h2 className="cta-heading" style={{ margin: 0 }}>{t("home.cta_digital.line1")}</h2>
-            </TextMask>
-            <motion.p
-              className="cta-subheading"
-              style={{ marginTop: "15px" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={ctaView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.25, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              {t("home.cta_digital.line2")}
-            </motion.p>
+      <FadeInSection>
+        <section
+          className="home-section section-digital-cta"
+          style={{ backgroundImage: `url(${t("home.cta_digital.bg")})`, backgroundSize: "cover", backgroundPosition: "center", position: "relative" }}
+        >
+          {/* Soft edge fade at the top to blend from cream background */}
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "150px", background: "linear-gradient(to bottom, #FDFBF7, transparent)", zIndex: 1, pointerEvents: "none" }} />
+
+          <div className="container cta-container" style={{ position: "relative", zIndex: 2 }}>
             <motion.div
-              className="cta-action"
-              style={{ marginTop: "30px" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={ctaView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              ref={ctaRef}
+              className="cta-box"
+              initial={{ y: 80, opacity: 0 }}
+              animate={ctaView ? { y: 0, opacity: 1 } : {}}
+              transition={{ type: "spring", stiffness: 70, damping: 18, mass: 1 }}
             >
-              <Magnetic strength={0.4}>
-                <Link href="/contacto" className="btn-white-expert" style={{ display: "inline-block" }}>
-                  {t("home.cta_digital.btn")}
-                </Link>
-              </Magnetic>
+              <TextMask>
+                <h2 className="cta-heading" style={{ margin: 0 }}>{t("home.cta_digital.line1")}</h2>
+              </TextMask>
+              <motion.p
+                className="cta-subheading"
+                style={{ marginTop: "15px" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.25, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                {t("home.cta_digital.line2")}
+              </motion.p>
+              <motion.div
+                className="cta-action"
+                style={{ marginTop: "30px" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.45, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <Magnetic strength={0.4}>
+                  <Link href="/contacto" className="btn-white-expert" style={{ display: "inline-block" }}>
+                    {t("home.cta_digital.btn")}
+                  </Link>
+                </Magnetic>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+      </FadeInSection>
     </>
   );
 }
